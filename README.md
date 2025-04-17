@@ -168,3 +168,64 @@ Key observations included:
 - The Faster R-CNN required more setup and time to implement
     
 - The Faster R-CNN is not an elegant way to deal with image classification
+
+## Lab 3  
+### NLP with RNNs, LSTMs, and GPT-2 (Arabic Text)
+
+#### Objective  
+Apply deep learning models to Arabic NLP tasks using PyTorch and Hugging Face Transformers.
+
+---
+
+### Part One: Text Regression using RNNs
+
+**Task:** Predict relevance scores (0–10) from Arabic news text.
+
+**Models Implemented:**
+- ✅ Simple RNN  
+- ✅ Bidirectional RNN  
+- ✅ GRU  
+- ✅ LSTM  
+
+**Steps:**
+- Manual preprocessing and tokenization of Arabic text
+- Vectorization with Keras tokenizer
+- Train/test split with PyTorch models
+- Evaluated with MAE and MSE
+
+**Sample Results:**
+
+| Model     | MAE   | MSE   |
+|-----------|-------|-------|
+| RNN       | 0.73  | 0.91  |
+| Bi-RNN    | 0.71  | 0.88  |
+| GRU       | 0.69  | 0.85  |
+| LSTM      | 0.68  | 0.83  |
+
+---
+
+### Part Two: Text Generation with GPT-2
+
+**Prompt Example:**  
+```text
+التعليم في المستقبل سيكون
+
+Model Used: aubmindlab/aragpt2-base
+Tools: transformers, torch, nltk
+
+Output Example:
+
+التعليم في المستقبل سيكون على رأس أولوياتنا ...
+
+BLEU Evaluation:
+BLEU-N	Score
+BLEU-1	0.0515
+BLEU-2	0.0401
+BLEU-3	0.0324
+BLEU-4	0.0245
+
+Conclusion:
+Built RNN-based models for Arabic regression
+Used GPT-2 to generate fluent Arabic text
+Evaluated using BLEU scores and compared different n-gram overlaps
+Learned how generative evaluation differs from classification/regression
