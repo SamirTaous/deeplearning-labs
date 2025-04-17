@@ -1,3 +1,5 @@
+
+
 # **Lab 1**
 
 ## Regression & Multi-Class Classification
@@ -61,3 +63,168 @@ This lab reinforced my understanding of:
 - Evaluating models using appropriate metrics
 
 These techniques are crucial for building reliable machine learning models in real-world applications.
+
+# **Lab 2**
+
+## CNN and Faster R-CNN for MNIST
+
+## Report
+
+### Objective
+
+This lab explored different neural network architectures for image classification and object detection, focusing on the MNIST dataset. The goal was to implement, train, evaluate, and compare a Convolutional Neural Network (CNN) and a Faster R-CNN model for the task of digit recognition. The lab investigated the suitability of an object detection model (Faster R-CNN) for a simpler classification problem and highlighted the trade-offs between model complexity and performance.
+
+### Part One: CNN Classifier
+
+#### Task:
+
+For the first part, a Convolutional Neural Network (CNN) was designed and trained to classify the MNIST digits. This involved defining the network architecture, setting hyperparameters, implementing the training loop, and evaluating the model's performance on the test set.
+
+#### Key Steps:
+
+1. **Data Loading and Preprocessing:**
+    
+    - The MNIST dataset was loaded from ubyte files using a custom data loading function (read_idx).
+        
+    - A custom Dataset class (MNISTUByteDataset) was created to handle the ubyte data format and normalize the pixel values.
+        
+    - DataLoader instances were created for training and testing, enabling batching and shuffling.
+        
+2. **CNN Model Definition:**
+    
+    - A CNN architecture was defined using PyTorch's nn.Module. The architecture included convolutional layers, max pooling layers, and fully connected layers.
+        
+    - ReLU activation functions were used after the convolutional and fully connected layers.
+        
+3. **Training Setup:**
+    
+    - The CrossEntropyLoss was used as the loss function.
+        
+    - The Adam optimizer was used with a learning rate of 0.001.
+        
+    - The training loop iterated over epochs and batches, performing the forward pass, calculating the loss, performing backpropagation, and updating the model parameters.
+        
+    - Training loss and validation accuracy were tracked during training.
+        
+4. **Evaluation:**
+    
+    - The trained CNN model was evaluated on the test set.
+        
+    - Metrics such as accuracy, F1-score, and a confusion matrix were calculated and reported.
+        
+    - The training loss and validation accuracy were plotted over epochs to analyze the training process.
+        
+
+#### Results:
+
+The CNN model achieved a test accuracy of 98.83%, demonstrating strong performance on the MNIST classification task. The training loss converged smoothly, and the validation accuracy reached a plateau, indicating that the model was learning effectively without significant overfitting. The training time for this model was relatively small.
+
+### Part Two: Faster R-CNN for MNIST
+
+#### Task:
+
+In the second part, the MNIST dataset was adapted for use with a Faster R-CNN model, treating each digit as an object to be detected. A pre-trained Faster R-CNN model was fine-tuned for this task, and its performance was compared to the CNN model.
+
+#### Key Steps:
+
+1. **Data Transformation for Object Detection:**
+    
+    - A custom Dataset class (MNISTObjectDetectionDataset) was created to transform the MNIST data into an object detection format.
+        
+    - Each digit was treated as an object with a bounding box covering most of the image.
+        
+    - The dataset class created target dictionaries containing the bounding box coordinates and labels.
+        
+2. **Faster R-CNN Model Setup:**
+    
+    - A pre-trained Faster R-CNN model with a ResNet50 backbone (fasterrcnn_resnet50_fpn) was loaded from torchvision.models.detection.
+        
+    - The classifier (box predictor) of the Faster R-CNN model was modified to match the number of classes in the MNIST dataset (10 digits + background).
+        
+3. **Training:**
+    
+    - The training loop iterated over epochs and batches, performing the forward pass, calculating the loss, and updating the model parameters.
+        
+    - The Adam optimizer was used with a lower learning rate (0.0005) due to fine-tuning a pre-trained model.
+        
+4. **Evaluation:**
+    
+    - The trained Faster R-CNN model was evaluated on the test set.
+        
+    - Metrics such as accuracy, F1-score, and a confusion matrix were calculated and reported. Since Faster R-CNN gives bounding boxes, the overlap of the prediction with the actual bounding box was be taken into account.
+        
+
+#### Results:
+
+The Faster R-CNN model achieved a test accuracy of 95.23 %. While it performed reasonably well, the training time was significantly longer than the CNN model. The more complex architecture of Faster R-CNN did not result in a significant improvement in accuracy for this relatively simple digit classification task.
+
+### Conclusion
+
+This lab provided valuable insights into the application of different neural network architectures for image classification and object detection. While Faster R-CNN is a powerful model for complex object detection tasks, it proved to be overkill for the MNIST dataset. The simpler CNN architecture achieved comparable or better accuracy with significantly less training time, making it a more efficient and suitable solution for this specific problem.  
+Key observations included:
+
+- the CNN performed very well
+    
+- The Faster R-CNN required more setup and time to implement
+    
+- The Faster R-CNN is not an elegant way to deal with image classification
+
+
+# **Lab 3**  
+
+### NLP with RNNs, LSTMs, and GPT-2 (Arabic Text)
+
+#### Objective  
+Apply deep learning models to Arabic NLP tasks using PyTorch and Hugging Face Transformers.
+
+---
+
+### Part One: Text Regression using RNNs
+
+**Task:** Predict relevance scores (0–10) from Arabic news text.
+
+**Models Implemented:**
+- ✅ Simple RNN  
+- ✅ Bidirectional RNN  
+- ✅ GRU  
+- ✅ LSTM  
+
+**Steps:**
+- Manual preprocessing and tokenization of Arabic text
+- Vectorization with Keras tokenizer
+- Train/test split with PyTorch models
+- Evaluated with MAE and MSE
+
+**Sample Results:**
+
+| Model     | MAE   | MSE   |
+|-----------|-------|-------|
+| RNN       | 0.73  | 0.91  |
+| Bi-RNN    | 0.71  | 0.88  |
+| GRU       | 0.69  | 0.85  |
+| LSTM      | 0.68  | 0.83  |
+
+---
+
+### Part Two: Text Generation with GPT-2
+
+**Prompt Example:**  
+```text
+التعليم في المستقبل سيكون
+```
+Model Used: aubmindlab/aragpt2-base
+Tools: transformers, torch, nltk
+
+Output Example:
+```text
+
+التعليم في المستقبل سيكون على رأس أولوياتنا ...
+BLEU Evaluation:
+BLEU-N	Score
+BLEU-1	0.0515
+BLEU-2	0.0401
+BLEU-3	0.0324
+BLEU-4	0.0245
+```
+Conclusion:
+In this lab, I developed RNN-based models for Arabic text regression and used GPT-2 to generate fluent Arabic text from prompts. I evaluated the generation quality using BLEU-1 to BLEU-4 scores, which highlighted the difference between generative and predictive tasks. This lab strengthened my understanding of sequence modeling and transformer-based text generation in Arabic NLP.
